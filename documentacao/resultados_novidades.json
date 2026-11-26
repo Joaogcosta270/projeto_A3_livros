@@ -1,0 +1,68 @@
+{
+  "total": 15,
+  "aprovados": 15,
+  "reprovados": 0,
+  "ambiente": "Chromium + Playwright, armazenamento simulado",
+  "resultados": [
+    {
+      "cenario": "Nova estrutura com cadastro na faixa superior e acervo em linhas",
+      "resultado": "Aprovado"
+    },
+    {
+      "cenario": "Contador de empréstimos atrasados",
+      "resultado": "Aprovado"
+    },
+    {
+      "cenario": "Contadores de empréstimos, devoluções e exemplares livres",
+      "resultado": "Aprovado"
+    },
+    {
+      "cenario": "Botões redundantes de CSV e novo empréstimo removidos",
+      "resultado": "Aprovado"
+    },
+    {
+      "cenario": "Menu Empréstimos abre o formulário sem atalho extra",
+      "resultado": "Aprovado"
+    },
+    {
+      "cenario": "Contador de empréstimos que vencem até 7 dias",
+      "resultado": "Aprovado"
+    },
+    {
+      "cenario": "Classificação automática de empréstimos: atrasado, próximo, em dia e devolvido",
+      "resultado": "Aprovado"
+    },
+    {
+      "cenario": "Filtro Atrasados",
+      "resultado": "Aprovado"
+    },
+    {
+      "cenario": "Filtro Vencem em 7 dias inclui o sétimo dia",
+      "resultado": "Aprovado"
+    },
+    {
+      "cenario": "Filtro Em aberto inclui todos os empréstimos ainda não devolvidos",
+      "resultado": "Aprovado"
+    },
+    {
+      "cenario": "Filtro Devolvidos sem falsos atrasos",
+      "resultado": "Aprovado"
+    },
+    {
+      "cenario": "Devolução retira livro do contador de atrasos",
+      "resultado": "Aprovado"
+    },
+    {
+      "cenario": "Interface nova sem rolagem horizontal no celular",
+      "resultado": "Aprovado"
+    },
+    {
+      "cenario": "Cadastro aceita título digitado livremente",
+      "resultado": "Aprovado"
+    },
+    {
+      "cenario": "Sem erros JavaScript nos novos fluxos",
+      "resultado": "Aprovado"
+    }
+  ]
+}

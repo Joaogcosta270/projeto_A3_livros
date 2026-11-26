@@ -1,0 +1,384 @@
+{
+  "total": 47,
+  "aprovados": 47,
+  "reprovados": 0,
+  "ambiente": "Chromium, Playwright, HTML real renderizado com armazenamento simulado; rede/localhost bloqueados no ambiente de execução",
+  "resultados": [
+    {
+      "id": "CT01",
+      "cenario": "Inicialização do sistema",
+      "esperado": "Contadores iniciam em zero e JavaScript ativo",
+      "obtido": "Cadastro ativo. Preencha os campos e clique em Salvar livro.",
+      "resultado": "Aprovado",
+      "evidencia": ""
+    },
+    {
+      "id": "CT02",
+      "cenario": "Cadastro sem título/autor/ano",
+      "esperado": "Bloqueio com mensagem",
+      "obtido": "Informe o título do livro. Informe o autor do livro. Informe o ano de publicação. O ano deve estar entre 1 e 2026.",
+      "resultado": "Aprovado",
+      "evidencia": ""
+    },
+    {
+      "id": "CT03",
+      "cenario": "Cadastro sem autor",
+      "esperado": "Mensagem obrigatória",
+      "obtido": "Informe o autor do livro.",
+      "resultado": "Aprovado",
+      "evidencia": ""
+    },
+    {
+      "id": "CT04",
+      "cenario": "Ano zero",
+      "esperado": "Rejeitado",
+      "obtido": "O ano deve estar entre 1 e 2026.",
+      "resultado": "Aprovado",
+      "evidencia": ""
+    },
+    {
+      "id": "CT05",
+      "cenario": "Ano acima de 2026",
+      "esperado": "Rejeitado",
+      "obtido": "O ano deve estar entre 1 e 2026.",
+      "resultado": "Aprovado",
+      "evidencia": ""
+    },
+    {
+      "id": "CT06",
+      "cenario": "Ano em notação exponencial 2e3",
+      "esperado": "Bloqueado como formato inválido",
+      "obtido": "Digite o ano com até 4 algarismos, sem letras ou símbolos.",
+      "resultado": "Aprovado",
+      "evidencia": ""
+    },
+    {
+      "id": "CT07",
+      "cenario": "Cadastro de livro válido",
+      "esperado": "Aparece como LIV001 e contador 1",
+      "obtido": "D\nLIV001\nDom Casmurro\n\nMachado de Assis\n\n1899\n● Disponível\nEditar\nEmprestar\nExcluir",
+      "resultado": "Aprovado",
+      "evidencia": "01-cadastro-liv001.png"
+    },
+    {
+      "id": "CT08",
+      "cenario": "Prévia do código",
+      "esperado": "Próximo código LIV002",
+      "obtido": "LIV002",
+      "resultado": "Aprovado",
+      "evidencia": ""
+    },
+    {
+      "id": "CT09",
+      "cenario": "Livro com ano mínimo 1",
+      "esperado": "Aceito com LIV002",
+      "obtido": "D\nLIV001\nDom Casmurro\n\nMachado de Assis\n\n1899\n● Disponível\nEditar\nEmprestar\nExcluir\nA\nLIV002\nA Arte da Guerra\n\nSun Tzu\n\n1\n● Disponível\nEditar\nEmprestar\nExcluir",
+      "resultado": "Aprovado",
+      "evidencia": ""
+    },
+    {
+      "id": "CT10",
+      "cenario": "Livro de 2026",
+      "esperado": "Aceito com LIV003",
+      "obtido": "D\nLIV001\nDom Casmurro\n\nMachado de Assis\n\n1899\n● Disponível\nEditar\nEmprestar\nExcluir\nA\nLIV002\nA Arte da Guerra\n\nSun Tzu\n\n1\n● Disponível\nEditar\nEmprestar\nExcluir\n",
+      "resultado": "Aprovado",
+      "evidencia": ""
+    },
+    {
+      "id": "CT11",
+      "cenario": "Pesquisar por título",
+      "esperado": "Só o título correspondente aparece",
+      "obtido": "D\nLIV001\nDom Casmurro\n\nMachado de Assis\n\n1899\n● Disponível\nEditar\nEmprestar\nExcluir",
+      "resultado": "Aprovado",
+      "evidencia": ""
+    },
+    {
+      "id": "CT12",
+      "cenario": "Pesquisar por autor",
+      "esperado": "Encontra A Arte da Guerra",
+      "obtido": "A\nLIV002\nA Arte da Guerra\n\nSun Tzu\n\n1\n● Disponível\nEditar\nEmprestar\nExcluir",
+      "resultado": "Aprovado",
+      "evidencia": ""
+    },
+    {
+      "id": "CT13",
+      "cenario": "Filtro emprestados antes do empréstimo",
+      "esperado": "Nenhum cartão visível",
+      "obtido": "NENHUM LIVRO ENCONTRADO\n\nExperimente mudar a busca ou o filtro.",
+      "resultado": "Aprovado",
+      "evidencia": ""
+    },
+    {
+      "id": "CT14",
+      "cenario": "Editar livro",
+      "esperado": "Formulário preenchido",
+      "obtido": "Dom Casmurro",
+      "resultado": "Aprovado",
+      "evidencia": ""
+    },
+    {
+      "id": "CT15",
+      "cenario": "Cancelar edição",
+      "esperado": "Retorna a modo cadastro, sem alterar livro",
+      "obtido": "CADASTRAR LIVRO",
+      "resultado": "Aprovado",
+      "evidencia": ""
+    },
+    {
+      "id": "CT16",
+      "cenario": "Salvar edição",
+      "esperado": "Título novo com mesmo LIV002 e 3 livros",
+      "obtido": "D\nLIV001\nDom Casmurro\n\nMachado de Assis\n\n1899\n● Disponível\nEditar\nEmprestar\nExcluir\nA\nLIV002\nA Arte da Guerra - Revisto\n\nSun Tzu\n\n1\n● Disponível\nEditar\nEmprestar\nExcluir\nL\nLIV003\nLivro contemporâneo\n\n",
+      "resultado": "Aprovado",
+      "evidencia": ""
+    },
+    {
+      "id": "CT17",
+      "cenario": "Cancelar exclusão",
+      "esperado": "Livro permanece após cancelar confirmação",
+      "obtido": "3",
+      "resultado": "Aprovado",
+      "evidencia": ""
+    },
+    {
+      "id": "CT18",
+      "cenario": "Confirmar exclusão",
+      "esperado": "Livro removido do acervo",
+      "obtido": "2",
+      "resultado": "Aprovado",
+      "evidencia": ""
+    },
+    {
+      "id": "CT19",
+      "cenario": "Sequência após exclusão",
+      "esperado": "Próximo é LIV004 e nunca reutiliza LIV002",
+      "obtido": "D\nLIV001\nDom Casmurro\n\nMachado de Assis\n\n1899\n● Disponível\nEditar\nEmprestar\nExcluir\nL\nLIV003\nLivro contemporâneo\n\nAutora Teste\n\n2026\n● Disponível\nEditar\nEmprestar\nExcluir\nD\nLIV004\nDepois da exclusão\n\nAutor Livre\n\n1900\n● Disponível\nEditar\nEmprestar\nEx",
+      "resultado": "Aprovado",
+      "evidencia": ""
+    },
+    {
+      "id": "CT20",
+      "cenario": "Atalho Emprestar",
+      "esperado": "Abre empréstimos com livro selecionado",
+      "obtido": "mwk4mqxvkhz0md",
+      "resultado": "Aprovado",
+      "evidencia": ""
+    },
+    {
+      "id": "CT21",
+      "cenario": "Empréstimo sem leitor",
+      "esperado": "Bloqueado e mensagem exibida",
+      "obtido": "Informe quem pegou o livro.",
+      "resultado": "Aprovado",
+      "evidencia": ""
+    },
+    {
+      "id": "CT22",
+      "cenario": "Devolução prevista no passado",
+      "esperado": "Bloqueada",
+      "obtido": "A devolução prevista não pode ser anterior à retirada. A devolução prevista não pode ser em uma data passada.",
+      "resultado": "Aprovado",
+      "evidencia": ""
+    },
+    {
+      "id": "CT23",
+      "cenario": "Devolução antes da retirada",
+      "esperado": "Bloqueada",
+      "obtido": "A devolução prevista não pode ser anterior à retirada. A devolução prevista não pode ser em uma data passada.",
+      "resultado": "Aprovado",
+      "evidencia": ""
+    },
+    {
+      "id": "CT24",
+      "cenario": "REGRESSÃO BUG01: retirada futura",
+      "esperado": "Bloqueada, sem empréstimo ativo",
+      "obtido": "A data da retirada não pode ser futura.",
+      "resultado": "Aprovado",
+      "evidencia": "02-bug01-depois-data-futura-bloqueada.png"
+    },
+    {
+      "id": "CT25",
+      "cenario": "Empréstimo válido",
+      "esperado": "Aparece 1 emprestado e 2 disponíveis",
+      "obtido": "1 emprestado",
+      "resultado": "Aprovado",
+      "evidencia": "03-emprestimo-ativo.png"
+    },
+    {
+      "id": "CT26",
+      "cenario": "Livro emprestado removido da seleção",
+      "esperado": "Sem opção do livro ativo",
+      "obtido": "Selecione um livro\nLIV003 · Livro contemporâneo\nLIV004 · Depois da exclusão",
+      "resultado": "Aprovado",
+      "evidencia": ""
+    },
+    {
+      "id": "CT27",
+      "cenario": "Histórico exibe empréstimo",
+      "esperado": "Leitor e livro aparecem",
+      "obtido": "Dom Casmurro\n\nLeitor: Leitora Teste\n\nVence em breve\nRetirada\n17/11/2026\nPrazo\n24/11/2026\nDevolução\n—\nMarcar devolução",
+      "resultado": "Aprovado",
+      "evidencia": ""
+    },
+    {
+      "id": "CT28",
+      "cenario": "Filtro devolvidos antes de devolver",
+      "esperado": "Histórico devolvido vazio",
+      "obtido": "Nenhum empréstimo encontrado nesta categoria.",
+      "resultado": "Aprovado",
+      "evidencia": ""
+    },
+    {
+      "id": "CT29",
+      "cenario": "Excluir livro emprestado",
+      "esperado": "Bloqueia exclusão e preserva cadastro",
+      "obtido": "Não é possível excluir um livro com empréstimo em aberto.",
+      "resultado": "Aprovado",
+      "evidencia": ""
+    },
+    {
+      "id": "CT30",
+      "cenario": "REGRESSÃO BUG02: editar livro emprestado",
+      "esperado": "Histórico ativo exibe título atualizado",
+      "obtido": "Dom Casmurro - Revisado",
+      "resultado": "Aprovado",
+      "evidencia": "04-bug02-depois-historico-atualizado.png"
+    },
+    {
+      "id": "CT31",
+      "cenario": "Filtro empréstimos ativos",
+      "esperado": "Exibe empréstimo aberto",
+      "obtido": "Dom Casmurro - Revisado\n\nLeitor: Leitora Teste\n\nVence em breve\nRetirada\n17/11/2026\nPrazo\n2",
+      "resultado": "Aprovado",
+      "evidencia": ""
+    },
+    {
+      "id": "CT32",
+      "cenario": "Devolver livro pelo histórico",
+      "esperado": "Empréstimos ativos 0 e devoluções 1",
+      "obtido": "1 devolução",
+      "resultado": "Aprovado",
+      "evidencia": "05-devolucao-registrada.png"
+    },
+    {
+      "id": "CT33",
+      "cenario": "Filtro devolvidos após devolução",
+      "esperado": "Exibe registro com data real",
+      "obtido": "Dom Casmurro - Revisado\n\nLeitor: Leitora Teste\n\nDevolvido\nRetirada\n17/11/2026\nPrazo\n24/11/2026\nDevolução\n17/11/2026",
+      "resultado": "Aprovado",
+      "evidencia": ""
+    },
+    {
+      "id": "CT34",
+      "cenario": "Disponibilidade após devolução",
+      "esperado": "Livro volta a ficar disponível",
+      "obtido": "3",
+      "resultado": "Aprovado",
+      "evidencia": ""
+    },
+    {
+      "id": "CT35",
+      "cenario": "Integração de armazenamento / remontagem",
+      "esperado": "3 livros, 1 devolução e próximo LIV005 recuperados",
+      "obtido": "3 livros; LIV005",
+      "resultado": "Aprovado",
+      "evidencia": "06-persistencia-simulada.png"
+    },
+    {
+      "id": "CT36",
+      "cenario": "Escape de título HTML malicioso",
+      "esperado": "Título exibido como texto, sem executar tag",
+      "obtido": "<\nLIV005\n<img src=x onerror=alert(1)>\n\nAutor Seguro\n\n2020\n● Disponível\nEditar\nEmprestar\nExcluir",
+      "resultado": "Aprovado",
+      "evidencia": ""
+    },
+    {
+      "id": "CT37",
+      "cenario": "Ausência de erro JavaScript no fluxo",
+      "esperado": "Nenhum erro JS",
+      "obtido": "",
+      "resultado": "Aprovado",
+      "evidencia": ""
+    },
+    {
+      "id": "CT38",
+      "cenario": "Interface no celular",
+      "esperado": "Sem rolagem horizontal",
+      "obtido": "[390, 390]",
+      "resultado": "Aprovado",
+      "evidencia": "07-mobile.png"
+    },
+    {
+      "id": "CT39",
+      "cenario": "Fallback com LocalStorage bloqueado",
+      "esperado": "Cadastro visível com aviso de sessão temporária",
+      "obtido": "Livro LIV001 cadastrado nesta sessão. O armazenamento permanente está bloqueado; abra com Live Server para preservar após F5.\nVer livro no acervo",
+      "resultado": "Aprovado",
+      "evidencia": "08-storage-bloqueado.png"
+    },
+    {
+      "id": "CT41",
+      "cenario": "Limite automático de 3 meses no calendário",
+      "esperado": "Data máxima e orientação exibidas",
+      "obtido": "2027-02-17 / Prazo máximo: 3 meses após a retirada (até 17/02/2027).",
+      "resultado": "Aprovado",
+      "evidencia": ""
+    },
+    {
+      "id": "CT42",
+      "cenario": "Prazo 3 meses + 1 dia",
+      "esperado": "Empréstimo rejeitado, contador permanece zero",
+      "obtido": "A devolução prevista deve ocorrer em até 3 meses após a retirada.",
+      "resultado": "Aprovado",
+      "evidencia": "11-prazo-superior-tres-meses-bloqueado.png"
+    },
+    {
+      "id": "CT43",
+      "cenario": "Prazo exatamente de 3 meses",
+      "esperado": "Empréstimo aceito e registrado",
+      "obtido": "1 livro emprestado",
+      "resultado": "Aprovado",
+      "evidencia": "12-prazo-tres-meses-aceito.png"
+    },
+    {
+      "id": "CT44",
+      "cenario": "Prazo menor que 3 meses (7 dias)",
+      "esperado": "Empréstimo aceito",
+      "obtido": "2 livros emprestados",
+      "resultado": "Aprovado",
+      "evidencia": ""
+    },
+    {
+      "id": "CT45",
+      "cenario": "Fim de mês: 30/11/2026 + 3 meses",
+      "esperado": "Data máxima 28/02/2027, sem transbordar para março",
+      "obtido": "2027-02-28",
+      "resultado": "Aprovado",
+      "evidencia": ""
+    },
+    {
+      "id": "CT46",
+      "cenario": "Mês com 31 dias seguido de mês com 30 dias",
+      "esperado": "31/08/2026 + 3 meses = 30/11/2026",
+      "obtido": "2026-11-30",
+      "resultado": "Aprovado",
+      "evidencia": ""
+    },
+    {
+      "id": "BUG01-ANTES",
+      "cenario": "Reproduzir defeito de retirada futura na versão anterior",
+      "esperado": "Defeito demonstrado: empréstimo futuro foi aceito",
+      "obtido": "Empréstimo registrado com sucesso.",
+      "resultado": "Aprovado",
+      "evidencia": "09-bug01-antes-data-futura-aceita.png"
+    },
+    {
+      "id": "BUG02-ANTES",
+      "cenario": "Reproduzir defeito de título desatualizado no histórico ativo",
+      "esperado": "Defeito demonstrado: título antigo permanece no histórico",
+      "obtido": "Dom Casmurro",
+      "resultado": "Aprovado",
+      "evidencia": "10-bug02-antes-historico-antigo.png"
+    }
+  ]
+}

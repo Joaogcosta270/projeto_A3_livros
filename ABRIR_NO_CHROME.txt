@@ -1,0 +1,14 @@
+COMO ABRIR O PROJETO A3 LIVROS NO GOOGLE CHROME
+
+1. Extraia o arquivo projeto_A3_livros.zip.
+2. No Visual Studio Code, abra a pasta projeto_A3_livros.
+3. Instale a extensão Live Server (Ritwick Dey), se ainda não estiver instalada.
+4. Clique com o botão direito em index.html e selecione Open with Live Server.
+5. O site abrirá no Chrome (ou navegador padrão) com um endereço local parecido com:
+   http://127.0.0.1:5500/index.html
+6. Se abrir em outro navegador, copie o endereço local e cole no Google Chrome.
+
+IMPORTANTE: O endereço sandbox:/... ou chatgpt.com/... é da prévia/arquivo enviado pelo ChatGPT.
+O Live Server abre o site no seu computador, sem usar o endereço do ChatGPT.
+Para obter um endereço público (ex.: https://...github.io/...), é necessário publicar os arquivos em hospedagem web.
+Os dados cadastrados ficam no armazenamento local do navegador que estiver usando.

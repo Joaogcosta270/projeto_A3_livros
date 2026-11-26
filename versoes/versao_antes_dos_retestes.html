@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#173a2c">
+<meta name="description" content="Seus Livros — controle simples do seu acervo e empréstimos.">
+<title>Seus Livros — Cadastro funcional</title>
+<style>
+:root{
+  --pine:#173c2e;
+  --pine-deep:#103124;
+  --pine-mid:#32624a;
+  --gold:#d1aa55;
+  --paper:#f7f5ee;
+  --white:#fffefa;
+  --ink:#24312a;
+  --muted:#75817b;
+  --line:#e3e5db;
+  --green:#2c815b;
+  --red:#a85547;
+  --display:Georgia,'Times New Roman',serif;
+  --body:'Segoe UI',Tahoma,Arial,sans-serif;
+  --mono:Consolas,'Liberation Mono',monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 13px/1.65 var(--body)}
+button,input,select{font:inherit}button{cursor:pointer}button:disabled{opacity:.45;cursor:not-allowed}
+.app{max-width:1450px;margin:0 auto;min-height:100vh}
+.hero{background:var(--pine-deep);color:#fff;padding:0 5.2%;}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:22px;min-height:84px;border-bottom:1px solid #446254;}
+.brand{display:flex;align-items:center;gap:13px;}
+.logo{font:400 26px/1 var(--display);border:1px solid #7f9986;display:grid;place-items:center;width:43px;height:43px;color:var(--gold);letter-spacing:1px;}
+.brand-label{font-weight:700;font-size:14px;letter-spacing:-.3px;display:block}
+.brand-detail{display:block;color:#b5c5ba;font-size:10px;margin-top:1px}
+.nav{display:flex;gap:27px;align-items:center;align-self:stretch}
+.nav button{border:0;border-bottom:2px solid transparent;padding:0 1px;background:none;color:#b9cbbf;font-weight:600;font-size:12px;letter-spacing:.02em;transition:color .2s,border-color .2s}
+.nav button:hover{color:#fff}.nav button.active{border-bottom-color:var(--gold);color:white}
+.hero-grid{display:grid;grid-template-columns:1fr auto;align-items:center;gap:24px;padding:47px 0 49px;}
+.kicker{font:500 10px/1.6 var(--mono);letter-spacing:2px;text-transform:uppercase;color:#dfc47f;margin:0 0 10px}
+.hero-copy h1{font:400 clamp(60px,7vw,93px)/.86 var(--display);letter-spacing:1.4px;margin:0;color:#fff;}
+.hero-summary{color:#bcccbe;font-size:12px;margin:17px 0 0;max-width:480px;line-height:1.65}
+.hero-art{display:flex;align-items:flex-end;gap:6px;width:214px;height:136px;position:relative;padding-bottom:12px;justify-content:center}
+.hero-art .spine{border-radius:3px 3px 0 0;border:1px solid #ffffff22;box-shadow:inset 3px 0 #ffffff12;transform-origin:bottom center;position:relative}
+.hero-art .spine::after{content:"";position:absolute;top:17px;left:6px;right:6px;border-top:1px solid #ffeac177;box-shadow:0 66px #ffeac177}
+.spine-a{height:83px;width:30px;background:#a35940;transform:rotate(-7deg)}
+.spine-b{height:110px;width:35px;background:#4f795c}
+.spine-c{height:127px;width:37px;background:#d7bd7d}
+.spine-d{height:96px;width:31px;background:#886a55}
+.spine-e{height:108px;width:32px;background:#6d927a;transform:rotate(7deg)}
+.hero-art .shelf{height:5px;background:#af915c;position:absolute;bottom:6px;left:0;right:0;border-radius:3px}
+.stats{margin:0;padding:17px 5.2%;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));background:var(--white);border-bottom:1px solid var(--line)}
+.stat{padding:9px 27px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:2px}.stat:first-child{padding-left:0}.stat:last-child{border-right:0}
+.stat small{color:#748078;font-size:10px;font-weight:600;letter-spacing:.02em}
+.stat strong{font:400 35px/1.1 var(--display);letter-spacing:.5px;color:var(--pine)}
+.stat-detail{color:#9aa49c;font-size:10px}
+.workspace{display:grid;grid-template-columns:minmax(0,1fr) 332px;gap:36px;padding:37px 5.2% 70px;align-items:start}
+.catalog{min-width:0}
+.block-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:19px}
+.block-head h3{font:400 35px/1 var(--display);letter-spacing:.5px;margin:0;color:var(--pine)}
+.block-head p{margin:8px 0 0;color:var(--muted);font-size:11px}
+.toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.field,.select-field{width:100%;min-width:0;border:1px solid #d9dfd4;color:var(--ink);background:var(--white);border-radius:5px;padding:11px 12px;outline:none;font-size:12px;transition:border-color .15s,box-shadow .15s}
+.field::placeholder{color:#a0a99f}.field:focus,.select-field:focus{border-color:var(--pine-mid);box-shadow:0 0 0 3px rgba(50,98,74,.12)}
+.toolbar .search{width:236px}.toolbar .select-field{width:136px}
+.panel{background:var(--white);border:1px solid var(--line);border-radius:9px;padding:24px;position:sticky;top:20px;box-shadow:0 10px 28px rgba(24,44,32,.04)}
+.panel h3{font:400 31px/1 var(--display);letter-spacing:.3px;margin:0;color:var(--pine)}
+.panel .sub{color:var(--muted);font-size:11px;margin:8px 0 19px;line-height:1.6}
+.code-box{display:flex;justify-content:space-between;align-items:center;gap:8px;background:#f0f3e9;border:1px dashed #c3d0bd;border-radius:5px;padding:11px 13px}
+.code-box small{font-size:10px;color:#708070}.code-box strong{font:600 14px var(--mono);color:var(--pine)}
+.stack{display:grid;gap:14px}
+.stack label{display:block;font-size:11px;font-weight:600;color:#4d5c50;margin-bottom:6px}
+.row-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:19px}
+.btn{border-radius:5px;border:1px solid transparent;font-weight:700;font-size:11px;padding:10px 13px;transition:background .17s,color .17s,border-color .17s}
+.btn.primary{background:var(--pine);color:#fff}.btn.primary:hover{background:#25553f}
+.btn.secondary{background:#f1f2eb;color:var(--pine);border-color:#e1e5d9}.btn.secondary:hover{background:#e7eadd}
+.btn.danger{background:transparent;color:#a15349;border-color:transparent}.btn.danger:hover{background:#f7eeea}
+#save-book-btn{flex:1}
+.content-block{display:none}.content-block.active{display:block}
+.grid-books{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.book-card{display:flex;flex-direction:column;min-width:0;background:var(--white);border:1px solid var(--line);border-radius:8px;padding:19px;transition:border-color .2s,transform .2s,box-shadow .2s}
+.book-card:hover{border-color:#b9c9b4;transform:translateY(-2px);box-shadow:0 9px 25px rgba(15,48,30,.07)}
+.book-content{display:flex;gap:15px;min-height:149px;align-items:stretch}
+.book-cover{width:87px;min-width:87px;height:131px;border-radius:2px 6px 6px 2px;display:flex;flex-direction:column;justify-content:space-between;padding:12px 9px 13px 12px;box-shadow:inset 5px 0 #00000024,3px 4px 8px #26362913;position:relative;overflow:hidden}
+.cover-0{background:#476b54;color:#f8e9c9}.cover-1{background:#b66d52;color:#fff1dc}.cover-2{background:#2e5361;color:#f7e9b0}.cover-3{background:#74698b;color:#f3eecb}.cover-4{background:#ac9260;color:#fff7da}
+.cover-mark{font:600 9px var(--mono);letter-spacing:2px;opacity:.8}.cover-initials{font:400 44px/.9 var(--display);z-index:1}.cover-lines{border-top:1px solid currentColor;opacity:.5;height:11px;border-bottom:1px solid currentColor}
+.book-info{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start}
+.book-code{font:600 9px var(--mono);letter-spacing:1px;color:#88928b;margin-bottom:12px}
+.book-info h4{font:600 14px/1.4 var(--body);letter-spacing:-.4px;margin:0;max-width:100%;overflow-wrap:anywhere}
+.book-info p{color:var(--muted);font-size:11px;margin:7px 0 5px}
+.book-year{font:400 10px var(--mono);color:#9aa29a;margin:0 0 auto}
+.badge{display:inline-flex;align-items:center;gap:5px;border-radius:3px;font-size:10px;font-weight:600;margin-top:8px;padding:4px 7px}
+.badge.available{background:#edf4e9;color:#347b52}.badge.borrowed{background:#faf1e3;color:#a06c26}
+.card-actions{border-top:1px solid #edf0e9;margin-top:16px;padding-top:13px;display:flex;gap:5px;align-items:center;flex-wrap:wrap}
+.card-actions .btn{font-size:10px;padding:8px 10px}
+.card-actions .btn.primary{margin-left:auto}
+.card-actions .btn.danger{margin-left:auto}
+.card-actions .btn.primary + .btn.danger{margin-left:0}
+.empty{grid-column:1/-1;border:1px dashed #c6d1c5;background:#fffefa;padding:51px 20px;text-align:center;border-radius:8px}
+.empty-mark{display:block;font-size:32px;color:#8aa391;margin-bottom:12px}
+.empty h4{margin:0;font:400 27px var(--display);color:var(--pine)}.empty p{font-size:11px;color:var(--muted);margin:6px auto 0;max-width:300px}
+.history-list{display:grid;gap:12px}.history-item{border:1px solid var(--line);background:var(--white);border-radius:8px;padding:19px}
+.history-top{display:flex;justify-content:space-between;align-items:start;gap:12px}
+.history-top h4{margin:0;font-size:14px;line-height:1.45}.history-top p{color:var(--muted);font-size:11px;margin:7px 0 0}
+.history-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:16px}
+.history-meta div{border:1px solid #eef0e9;border-radius:4px;padding:9px 11px;background:#f9f9f5}
+.history-meta small{display:block;color:#99a299;font-size:10px;margin-bottom:4px}.history-meta strong{font:600 11px var(--mono)}
+.notice{display:none;position:fixed;right:24px;bottom:24px;max-width:min(430px,calc(100% - 40px));padding:15px 18px;border-radius:6px;box-shadow:0 14px 50px #15281d25;z-index:30;font-size:12px;font-weight:600}
+.notice.show{display:block}.notice.success{background:#eaf4e9;border:1px solid #b7d7b6;color:#245d39}.notice.error{background:#fff1ef;border:1px solid #ecc7bd;color:#a04c42}
+.site-footer{margin:0 5.2%;padding:20px 0 35px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;color:#a2aaa1;font:400 10px/1.6 var(--mono)}
+@media(max-width:1120px){.workspace{grid-template-columns:minmax(0,1fr) 306px;gap:19px}.grid-books{grid-template-columns:1fr}.toolbar .search{width:205px}}
+@media(max-width:800px){.workspace{grid-template-columns:1fr}.panel{position:static;order:-1}.grid-books{grid-template-columns:repeat(2,minmax(0,1fr))}.hero-art{width:170px;transform:scale(.8);transform-origin:right center}.hero-grid{padding:34px 0}.stats{padding:16px 5.2%}.stat{padding:8px 14px}}
+@media(max-width:560px){.topbar{min-height:74px}.brand-detail{display:none}.nav{gap:15px}.nav button{font-size:11px}.hero-art{display:none}.hero-grid{display:block;padding:35px 0 38px}.hero-copy h1{font-size:64px}.stats{grid-template-columns:repeat(2,1fr)}.stat:nth-child(2){border-right:0}.stat:nth-child(3),.stat:nth-child(4){border-top:1px solid var(--line);padding-top:16px}.stat:nth-child(3){padding-left:0}.stat small{font-size:10px}.stat strong{font-size:30px}.workspace{padding:24px 4.5% 43px}.hero{padding:0 4.5%}.stats{padding:10px 4.5%}.grid-books{grid-template-columns:1fr}.toolbar{width:100%}.toolbar .search{flex:1;min-width:145px}.toolbar .select-field{width:128px}.site-footer{margin:0 4.5%}.history-meta{grid-template-columns:1fr}.row-2{grid-template-columns:1fr}}
+
+/* Interface limpa: sem banner, ilustração ou capas artificiais. */
+.hero {background:var(--pine-deep);padding:0 5.2%;}
+.topbar {min-height:80px;border-bottom:0;}
+.brand-label {font:400 34px/1 var(--display);letter-spacing:.7px;color:#fff;}
+.nav {gap:25px;}
+.nav button {font-size:12px;}
+.stats {border-top:0;}
+.workspace {padding-top:34px;}
+.grid-books {gap:14px;}
+.book-card {min-height:195px;padding:20px;}
+.book-content {min-height:100px;align-items:stretch;}
+.book-info {display:flex;flex-direction:column;align-items:flex-start;gap:0;width:100%;}
+.book-code {margin:0 0 10px;padding:4px 8px;border:1px solid #dce4d8;border-radius:4px;color:#56725b;background:#f3f6ef;letter-spacing:.5px;}
+.book-info h4 {font:600 16px/1.45 var(--body);letter-spacing:-.3px;margin:0 0 2px;}
+.book-info p {font-size:12px;margin:5px 0 10px;}
+.book-footer {display:flex;align-items:center;gap:10px;justify-content:space-between;flex-wrap:wrap;width:100%;margin-top:auto;}
+.book-year {margin:0;}
+.book-footer .badge {margin:0;}
+.card-actions {margin-top:17px;}
+@media(max-width:560px){
+  .topbar{min-height:72px;}
+  .brand-label{font-size:30px;}
+  .nav{gap:17px;}
+  .workspace{padding-top:23px;}
+  .book-card{min-height:0;}
+}
+
+/* Tipografia editorial: família serifada clássica para títulos, interface em fonte do sistema. */
+body {font:400 14px/1.55 var(--body);font-kerning:normal;-webkit-font-smoothing:antialiased}
+.brand-label {font:600 30px/1.15 var(--display);letter-spacing:-.045em}
+.nav button {font:500 13px/1.3 var(--body);letter-spacing:0}
+.stat small {font-size:12px;font-weight:500;letter-spacing:0}
+.stat strong {font:700 30px/1.2 var(--body);letter-spacing:-.055em}
+.stat-detail {font-size:11px;letter-spacing:0}
+.block-head h3 {font:600 29px/1.18 var(--display);letter-spacing:-.04em}
+.block-head p {font-size:13px;line-height:1.5;margin-top:7px}
+.panel h3 {font:600 24px/1.2 var(--display);letter-spacing:-.035em}
+.panel .sub {font-size:12px;line-height:1.55}
+.stack label {font-size:12px;font-weight:600;letter-spacing:0}
+.field,.select-field {font-size:13px;line-height:1.5}
+.btn {font:600 12px/1.4 var(--body);letter-spacing:0}
+.card-actions .btn {font-size:12px}
+.book-code {font:500 11px/1.3 var(--mono);letter-spacing:0}
+.book-info h4 {font:650 16px/1.38 var(--body);letter-spacing:-.025em}
+.book-info p {font-size:13px;line-height:1.45}
+.book-year {font:400 11px/1.4 var(--body);letter-spacing:0}
+.badge {font:600 11px/1.3 var(--body);letter-spacing:0}
+.code-box small {font-size:11px}
+.code-box strong {font:600 13px/1.3 var(--mono);letter-spacing:.015em}
+.empty h4 {font:600 22px/1.25 var(--display);letter-spacing:-.025em}
+.empty p {font-size:13px}
+.history-top h4 {font-size:16px;font-weight:600}
+.history-top p {font-size:13px}
+.history-meta small {font-size:11px}
+.history-meta strong {font:600 12px/1.3 var(--body)}
+.site-footer {font:400 11px/1.5 var(--body);letter-spacing:0}
+.notice {font-size:13px;font-weight:500}
+@media(max-width:560px){
+ .brand-label {font-size:26px}
+ .nav button {font-size:12px}
+ .stat strong {font-size:28px}
+ .block-head h3 {font-size:27px}
+ .panel h3 {font-size:24px}
+}
+/* Diagnóstico discreto: se o JavaScript for bloqueado, o aviso permanece */
+.runtime-status {margin-top:12px;padding:10px 11px;border-radius:5px;font:500 11px/1.5 var(--body);background:#fff5ed;border:1px solid #ead6c1;color:#865a34}
+.runtime-status.ready{background:#edf5e9;border-color:#c5dec3;color:#2f6649}
+.runtime-status.temp{background:#fff8e9;border-color:#eedba5;color:#856124}
+/* Feedback funcional do formulário, sem modificar a identidade visual */
+.form-feedback {display:none;margin-top:13px;padding:11px 13px;border-radius:5px;font:500 12px/1.5 var(--body);border:1px solid transparent;}
+.form-feedback.show {display:block}
+.form-feedback.success {background:#ecf4e9;color:#245d39;border-color:#bfdbc0}
+.form-feedback.error {background:#fff2ef;color:#a04c42;border-color:#e9c3ba}
+.form-feedback .feedback-link {display:inline-block;margin:6px 0 0;border:0;background:none;padding:0;text-decoration:underline;color:inherit;font-weight:700;font-size:12px}
+.storage-warning {margin:0 5.2%;background:#fffaec;color:#69511b;border:1px solid #e6d5a7;padding:12px 15px;font-size:12px;line-height:1.6;border-radius:5px}
+.storage-warning[hidden]{display:none}
+.book-card.flash {outline:2px solid var(--gold);outline-offset:2px}
+.field.invalid {border-color:#ae6855;background:#fff9f6}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="hero">
+    <div class="topbar">
+      <div class="brand"><span class="brand-label">Seus Livros</span></div>
+      <nav class="nav" aria-label="Navegação principal">
+        <button class="active" data-view-btn="books" type="button">Acervo</button>
+        <button data-view-btn="loans" type="button">Empréstimos</button>
+      </nav>
+    </div>
+  </header>
+  <section class="stats" aria-label="Resumo da biblioteca">
+    <div class="stat"><small>Livros cadastrados</small><strong id="stat-books">0</strong><span class="stat-detail">no acervo</span></div>
+    <div class="stat"><small>Disponíveis</small><strong id="stat-available">0</strong><span class="stat-detail">para empréstimo</span></div>
+    <div class="stat"><small>Emprestados</small><strong id="stat-borrowed">0</strong><span class="stat-detail">no momento</span></div>
+    <div class="stat"><small>Devoluções</small><strong id="stat-returned">0</strong><span class="stat-detail">registradas</span></div>
+  </section>
+  <div id="storage-warning" class="storage-warning" role="alert" hidden><strong>Atenção ao salvamento:</strong> esta visualização não permite guardar livros permanentemente. Você pode cadastrá-los aqui durante a sessão, mas para mantê-los após atualizar, abra o projeto no Chrome ou Edge usando o Live Server do VS Code.</div>
+  <div id="notice" class="notice" role="status" aria-live="polite"></div>
+  <div class="workspace">
+    <main class="catalog">
+      <section id="books-view" class="content-block active">
+        <div class="block-head"><div><h3>Meu acervo</h3><p>Encontre, edite ou empreste um título.</p></div></div>
+        <div class="toolbar" style="margin-bottom:18px">
+          <input class="field search" id="search" type="search" placeholder="Buscar livro ou autor" aria-label="Buscar livros">
+          <select id="book-filter" class="select-field" aria-label="Filtrar disponibilidade"><option value="all">Todos</option><option value="available">Disponíveis</option><option value="borrowed">Emprestados</option></select>
+        </div>
+        <div id="books-grid" class="grid-books"></div>
+      </section>
+      <section id="loans-view" class="content-block">
+        <div class="block-head"><div><h3>Empréstimos</h3><p>Acompanhe as retiradas e devoluções.</p></div>
+          <select class="select-field" id="loan-filter" style="width:auto;min-width:160px" aria-label="Filtrar empréstimos"><option value="all">Todos</option><option value="active">Em aberto</option><option value="returned">Devolvidos</option></select>
+        </div>
+        <div id="loans-list" class="history-list"></div>
+      </section>
+    </main>
+    <aside class="panel">
+      <section id="book-form-panel" class="content-block active">
+        <h3 id="book-form-title">Novo livro</h3><p class="sub">Adicione um título à sua coleção.</p>
+        <div class="code-box"><small>Identificação do próximo livro</small><strong id="code-preview">LIV001</strong></div>
+        <form id="book-form" novalidate style="margin-top:19px">
+          <input id="editing-id" type="hidden">
+          <div class="stack">
+            <div><label for="title">Título</label><input class="field" id="title" maxlength="100" placeholder="Nome do livro" autocomplete="off"></div>
+            <div><label for="author">Autor</label><input class="field" id="author" maxlength="80" placeholder="Nome do autor" autocomplete="off"></div>
+            <div><label for="year">Ano de publicação</label><input class="field" id="year" type="number" min="1" max="2026" step="1" placeholder="Ex.: 1899"></div>
+          </div>
+          <div class="actions"><button type="submit" class="btn primary" id="save-book-btn">Cadastrar livro</button><button type="button" class="btn secondary" id="cancel-edit-btn" style="display:none">Cancelar edição</button></div>
+          <div id="book-feedback" class="form-feedback" role="status" aria-live="polite"></div>
+          <div id="runtime-status" class="runtime-status" role="status" aria-live="polite">Esta prévia ainda não iniciou o cadastro. Se este aviso permanecer, abra o HTML fora da prévia do ChatGPT, no Chrome/Edge, com Live Server.</div>
+        </form>
+      </section>
+      <section id="loan-form-panel" class="content-block">
+        <h3>Novo empréstimo</h3><p class="sub">Registre a retirada de um livro disponível.</p>
+        <form id="loan-form" novalidate>
+          <div class="stack">
+            <div><label for="loan-book">Livro</label><select class="select-field" id="loan-book"></select></div>
+            <div><label for="borrower">Nome do leitor</label><input class="field" id="borrower" maxlength="80" placeholder="Quem está levando o livro?" autocomplete="off"></div>
+            <div class="row-2"><div><label for="loan-date">Retirada</label><input class="field" type="date" id="loan-date"></div><div><label for="due-date">Devolução prevista</label><input class="field" type="date" id="due-date"></div></div>
+          </div>
+          <div class="actions"><button class="btn primary" type="submit">Registrar empréstimo</button></div>
+        </form>
+      </section>
+    </aside>
+  </div>
+  <footer class="site-footer"><span>SEUS LIVROS / CONTROLE DE BIBLIOTECA</span><span>Os dados ficam armazenados neste navegador.</span></footer>
+</div>
+<script>
+  (() => {
+    const STORAGE_KEY = 'bookflow_layout_v1';
+    const $ = (id) => document.getElementById(id);
+    const state = load();
+    function storageAvailable(){
+      try { const key = '__seus_livros_test__'; localStorage.setItem(key,'1'); localStorage.removeItem(key); return true; }
+      catch(e){ return false; }
+    }
+    const storageOK = storageAvailable();
+    if (!storageOK) $('storage-warning').hidden = false;
+    const runtimeStatus = $('runtime-status');
+    runtimeStatus.className = 'runtime-status ' + (storageOK ? 'ready' : 'temp');
+    runtimeStatus.textContent = storageOK
+      ? 'Cadastro ativo. Preencha os campos e clique em Salvar livro.'
+      : 'Cadastro ativo em modo temporário. Os livros aparecem no acervo, mas podem sumir ao fechar ou atualizar esta prévia.';
+    let highlightedCode = '';
+
+    function load(){
+      let saved = null;
+      try { saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null'); } catch(e) {}
+      const books = Array.isArray(saved?.books) ? saved.books : [];
+      const loans = Array.isArray(saved?.loans) ? saved.loans : [];
+      const maxCode = books.reduce((acc,b) => {
+        const m = String(b.code || '').match(/^LIV(\d+)$/i);
+        return m ? Math.max(acc, Number(m[1])) : acc;
+      }, 0);
+      return {
+        books,
+        loans,
+        nextNumber: Number.isInteger(saved?.nextNumber) && saved.nextNumber > maxCode ? saved.nextNumber : maxCode + 1,
+        sessionOnly: false
+      };
+    }
+    function persist(){
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({ books: state.books, loans: state.loans, nextNumber: state.nextNumber }));
+        state.sessionOnly = false;
+        return true;
+      } catch(e){
+        state.sessionOnly = true;
+        return false;
+      }
+    }
+    const today = () => new Date(Date.now() - new Date().getTimezoneOffset()*60000).toISOString().slice(0,10);
+    const fmt = (date) => date ? date.split('-').reverse().join('/') : '—';
+    const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,8);
+    const esc = (text) => String(text ?? '').replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]));
+    const nextCode = () => 'LIV' + String(state.nextNumber).padStart(3,'0');
+    const activeLoan = (bookId) => state.loans.find(loan => loan.bookId === bookId && !loan.returnDate);
+    const available = (bookId) => !activeLoan(bookId);
+    const statusBadge = (bookId) => available(bookId)
+      ? '<span class="badge available">● Disponível</span>'
+      : '<span class="badge borrowed">● Emprestado</span>';
+    function notify(text, type='success'){
+      const el = $('notice');
+      el.textContent = text + (state.sessionOnly && type === 'success' ? ' (Sessão temporária: o navegador bloqueou o armazenamento permanente.)' : '');
+      el.className = 'notice show ' + type;
+
+    }
+    function formMessage(text, type='success', showLink=false){
+      const el = $('book-feedback');
+      el.replaceChildren();
+      el.append(document.createTextNode(text));
+      el.className = 'form-feedback show ' + type;
+      if(showLink){
+        const link = document.createElement('button');
+        link.type = 'button';
+        link.className = 'feedback-link';
+        link.textContent = 'Ver livro no acervo';
+        link.addEventListener('click', () => {
+          const card = document.querySelector('.book-card.flash');
+          if(card) card.scrollIntoView({behavior:'smooth',block:'center'});
+          else $('books-view').scrollIntoView({behavior:'smooth',block:'start'});
+        });
+        el.append(document.createElement('br'),link);
+      }
+    }
+    function clearFormMessage(){ $('book-feedback').className='form-feedback'; $('book-feedback').replaceChildren(); }
+    function clearFieldErrors(){ ['title','author','year'].forEach(id=>$(id).classList.remove('invalid')); }
+    function clearNotice(){ $('notice').className = 'notice'; $('notice').textContent = ''; }
+    function resetBookForm(){
+      $('editing-id').value = '';
+      $('book-form').reset();
+      $('book-form-title').textContent = 'Cadastrar livro';
+      $('save-book-btn').textContent = 'Salvar livro';
+      $('cancel-edit-btn').style.display = 'none';
+      $('code-preview').textContent = nextCode();
+    }
+    function validateBook({title, author, year}, editingId=''){
+      const errors = [];
+      if(!title) errors.push('Informe o título do livro.');
+      if(!author) errors.push('Informe o autor do livro.');
+      if(!String(year).trim()) errors.push('Informe o ano de publicação.');
+      const yearNum = Number(year);
+      if(String(year).trim() && !/^\d{1,4}$/.test(String(year).trim())) errors.push('Digite o ano com até 4 algarismos, sem letras ou símbolos.');
+      else if(!Number.isInteger(yearNum)) errors.push('O ano precisa ser um número inteiro.');
+      if(yearNum < 1 || yearNum > 2026) errors.push('O ano deve estar entre 1 e 2026.');
+      return [...new Set(errors)];
+    }
+    function validateLoan({bookId, borrower, loanDate, dueDate}){
+      const errors = [];
+      if(!bookId) errors.push('Selecione um livro.');
+      if(!borrower) errors.push('Informe quem pegou o livro.');
+      if(!loanDate) errors.push('Informe a data de retirada.');
+      if(!dueDate) errors.push('Informe a devolução prevista.');
+      if(loanDate && dueDate && dueDate < loanDate) errors.push('A devolução prevista não pode ser anterior à retirada.');
+      if(dueDate && dueDate < today()) errors.push('A devolução prevista não pode ser em uma data passada.');
+      if(bookId && !available(bookId)) errors.push('Esse livro já está emprestado.');
+      return errors;
+    }
+    function setView(view){
+      document.querySelectorAll('[data-view-btn]').forEach(btn => btn.classList.toggle('active', btn.dataset.viewBtn === view));
+      $('books-view').classList.toggle('active', view === 'books');
+      $('loans-view').classList.toggle('active', view === 'loans');
+      $('book-form-panel').classList.toggle('active', view === 'books');
+      $('loan-form-panel').classList.toggle('active', view === 'loans');
+      clearNotice();
+    }
+    function renderStats(){
+      $('stat-books').textContent = state.books.length;
+      $('stat-available').textContent = state.books.filter(book => available(book.id)).length;
+      $('stat-borrowed').textContent = state.books.filter(book => !available(book.id)).length;
+      $('stat-returned').textContent = state.loans.filter(loan => loan.returnDate).length;
+      $('code-preview').textContent = nextCode();
+    }
+    function renderLoanSelect(){
+      const choices = state.books.filter(book => available(book.id));
+      $('loan-book').innerHTML = '<option value="">Selecione um livro</option>' + choices.map(book => `<option value="${book.id}">${esc(book.code)} · ${esc(book.title)}</option>`).join('');
+    }
+    function renderBooks(){
+      const query = $('search').value.trim().toLowerCase();
+      const filter = $('book-filter').value;
+      const books = state.books.filter(book => {
+        const matches = [book.code, book.title, book.author].some(item => String(item).toLowerCase().includes(query));
+        const ok = available(book.id);
+        return matches && (filter === 'all' || (filter === 'available' ? ok : !ok));
+      });
+      $('books-grid').innerHTML = books.length ? books.map(book => {
+        return `<article class="book-card ${book.code === highlightedCode ? 'flash' : ''}">
+          <div class="book-content">
+            <div class="book-info">
+              <span class="book-code">${esc(book.code)}</span>
+              <h4>${esc(book.title)}</h4>
+              <p>${esc(book.author)}</p>
+              <div class="book-footer"><span class="book-year">Publicado em ${esc(book.year)}</span>${statusBadge(book.id)}</div>
+            </div>
+          </div>
+          <div class="card-actions">
+            <button class="btn secondary" type="button" data-action="edit" data-id="${esc(book.id)}">Editar</button>
+            ${available(book.id) ? `<button class="btn primary" type="button" data-go-loan="${esc(book.id)}">Emprestar</button>` : `<button class="btn primary" type="button" data-action="return" data-id="${esc(book.id)}">Devolver</button>`}
+            <button class="btn danger" type="button" data-action="delete" data-id="${esc(book.id)}" aria-label="Excluir ${esc(book.title)}">Excluir</button>
+          </div>
+        </article>`;
+      }).join('') : `<div class="empty"><span class="empty-mark">▦</span><h4>${state.books.length ? 'Nenhum livro encontrado' : 'Seu acervo começa aqui'}</h4><p>${state.books.length ? 'Experimente mudar a busca ou o filtro.' : 'Cadastre seu primeiro livro para começar a organizar a biblioteca.'}</p></div>`;
+    }
+    function renderLoans(){
+      const filter = $('loan-filter').value;
+      const loans = [...state.loans].reverse().filter(loan => filter === 'all' || (filter === 'active' ? !loan.returnDate : !!loan.returnDate));
+      $('loans-list').innerHTML = loans.length ? loans.map(loan => {
+        const book = state.books.find(b => b.id === loan.bookId);
+        const isReturned = !!loan.returnDate;
+        return `
+          <article class="history-item">
+            <div class="history-top">
+              <div>
+                <h4>${esc(loan.bookTitle || book?.title || 'Livro removido')}</h4>
+                <p><strong>Leitor:</strong> ${esc(loan.borrower)}</p>
+              </div>
+              ${isReturned ? '<span class="badge available">● Devolvido</span>' : '<span class="badge borrowed">● Em aberto</span>'}
+            </div>
+            <div class="history-meta">
+              <div><small>Retirada</small><strong>${fmt(loan.loanDate)}</strong></div>
+              <div><small>Devolução prevista</small><strong>${fmt(loan.dueDate)}</strong></div>
+              <div><small>Devolução real</small><strong>${fmt(loan.returnDate)}</strong></div>
+            </div>
+            ${!isReturned ? `<div class="actions" style="margin-top:14px"><button class="btn primary" type="button" data-loan-return="${loan.id}">Marcar devolução</button></div>` : ''}
+          </article>
+        `;
+      }).join('') : '<div class="empty">Nenhum empréstimo registrado nesta categoria.</div>';
+    }
+    function render(){
+      renderStats();
+      renderLoanSelect();
+      renderBooks();
+      renderLoans();
+    }
+
+    $('book-form').addEventListener('submit', (event) => {
+      event.preventDefault();
+      const editingId = $('editing-id').value;
+      const payload = {
+        title: $('title').value.trim(),
+        author: $('author').value.trim(),
+        year: $('year').value.trim()
+      };
+      clearFieldErrors();
+      clearFormMessage();
+      const errors = validateBook(payload, editingId);
+      if(errors.length){
+        const firstEmpty = ['title','author','year'].find(id=>!$(id).value.trim());
+        const wrongYear = !/^\d{1,4}$/.test(payload.year) || Number(payload.year) < 1 || Number(payload.year) > 2026;
+        if(firstEmpty) $(firstEmpty).classList.add('invalid');
+        else if(wrongYear) $('year').classList.add('invalid');
+        formMessage(errors.join(' '), 'error');
+        (firstEmpty ? $(firstEmpty) : $('year')).focus();
+        return;
+      }
+      if(editingId){
+        const book = state.books.find(item => item.id === editingId);
+        if(!book) return formMessage('Livro não encontrado para edição.', 'error');
+        Object.assign(book, payload, { year: Number(payload.year) });
+        const permanentlySaved = persist();
+        highlightedCode = book.code;
+        $('search').value = '';
+        $('book-filter').value = 'all';
+        resetBookForm();
+        render();
+        return formMessage('Livro ' + book.code + ' atualizado' + (permanentlySaved ? ' e salvo com sucesso.' : ' nesta sessão. Para não perder os dados, use o Live Server.'), 'success', true);
+      }
+      const code = nextCode();
+      state.books.push({ id: uid(), code, title: payload.title, author: payload.author, year: Number(payload.year) });
+      state.nextNumber += 1;
+      const permanentlySaved = persist();
+      highlightedCode = code;
+      $('search').value = '';
+      $('book-filter').value = 'all';
+      resetBookForm();
+      render();
+      formMessage('Livro ' + code + ' cadastrado' + (permanentlySaved ? ' e salvo com sucesso!' : ' nesta sessão. O armazenamento permanente está bloqueado; abra com Live Server para preservar após F5.'), 'success', true);
+    });
+    $('cancel-edit-btn').addEventListener('click', ()=>{resetBookForm();clearFormMessage();clearFieldErrors();});
+
+    $('loan-form').addEventListener('submit', (event) => {
+      event.preventDefault();
+      const payload = {
+        bookId: $('loan-book').value,
+        borrower: $('borrower').value.trim(),
+        loanDate: $('loan-date').value,
+        dueDate: $('due-date').value
+      };
+      const errors = validateLoan(payload);
+      if(errors.length) return notify(errors.join(' '), 'error');
+      const book = state.books.find(item => item.id === payload.bookId);
+      state.loans.push({ id: uid(), ...payload, bookTitle: book?.title || '', returnDate: null });
+      persist();
+      $('loan-form').reset();
+      $('loan-date').value = today();
+      render();
+      notify('Empréstimo registrado com sucesso.');
+    });
+
+    $('books-grid').addEventListener('click', (event) => {
+      const actionBtn = event.target.closest('[data-action]');
+      const loanBtn = event.target.closest('[data-go-loan]');
+      if(loanBtn){
+        setView('loans');
+        $('loan-book').value = loanBtn.dataset.goLoan;
+        $('borrower').focus();
+        return;
+      }
+      if(!actionBtn) return;
+      const book = state.books.find(item => item.id === actionBtn.dataset.id);
+      if(!book) return;
+      if(actionBtn.dataset.action === 'edit'){
+        clearFormMessage();clearFieldErrors();
+        $('editing-id').value = book.id;
+        $('title').value = book.title;
+        $('author').value = book.author;
+        $('year').value = book.year;
+        $('book-form-title').textContent = 'Editar livro';
+        $('save-book-btn').textContent = 'Salvar alterações';
+        $('cancel-edit-btn').style.display = 'inline-flex';
+        $('book-form-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      if(actionBtn.dataset.action === 'delete'){
+        if(activeLoan(book.id)) return notify('Não é possível excluir um livro com empréstimo em aberto.', 'error');
+        if(!confirm(`Deseja realmente excluir o livro ${book.title}?`)) return;
+        state.books = state.books.filter(item => item.id !== book.id);
+        persist();
+        render();
+        notify('Livro excluído com sucesso.');
+      }
+      if(actionBtn.dataset.action === 'return'){
+        const loan = activeLoan(book.id);
+        if(!loan) return notify('Esse livro já está devolvido.', 'error');
+        loan.returnDate = today();
+        persist();
+        render();
+        notify('Devolução registrada com sucesso.');
+      }
+    });
+
+    $('loans-list').addEventListener('click', (event) => {
+      const btn = event.target.closest('[data-loan-return]');
+      if(!btn) return;
+      const loan = state.loans.find(item => item.id === btn.dataset.loanReturn);
+      if(!loan || loan.returnDate) return;
+      loan.returnDate = today();
+      persist();
+      render();
+      notify('Devolução registrada com sucesso.');
+    });
+
+    document.querySelectorAll('[data-view-btn]').forEach(btn => btn.addEventListener('click', () => setView(btn.dataset.viewBtn)));
+    $('search').addEventListener('input', renderBooks);
+    $('book-filter').addEventListener('change', renderBooks);
+    $('loan-filter').addEventListener('change', renderLoans);
+
+    $('loan-date').value = today();
+    resetBookForm();
+    render();
+  })();
+  </script>
+</body>
+</html>

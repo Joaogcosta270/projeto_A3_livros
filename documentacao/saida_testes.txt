@@ -1,0 +1,48 @@
+CT01: Aprovado — Inicialização do sistema
+CT02: Aprovado — Cadastro sem título/autor/ano
+CT03: Aprovado — Cadastro sem autor
+CT04: Aprovado — Ano zero
+CT05: Aprovado — Ano acima de 2026
+CT06: Aprovado — Ano em notação exponencial 2e3
+CT07: Aprovado — Cadastro de livro válido
+CT08: Aprovado — Prévia do código
+CT09: Aprovado — Livro com ano mínimo 1
+CT10: Aprovado — Livro de 2026
+CT11: Aprovado — Pesquisar por título
+CT12: Aprovado — Pesquisar por autor
+CT13: Aprovado — Filtro emprestados antes do empréstimo
+CT14: Aprovado — Editar livro
+CT15: Aprovado — Cancelar edição
+CT16: Aprovado — Salvar edição
+CT17: Aprovado — Cancelar exclusão
+CT18: Aprovado — Confirmar exclusão
+CT19: Aprovado — Sequência após exclusão
+CT20: Aprovado — Atalho Emprestar
+CT21: Aprovado — Empréstimo sem leitor
+CT22: Aprovado — Devolução prevista no passado
+CT23: Aprovado — Devolução antes da retirada
+CT24: Aprovado — REGRESSÃO BUG01: retirada futura
+CT25: Aprovado — Empréstimo válido
+CT26: Aprovado — Livro emprestado removido da seleção
+CT27: Aprovado — Histórico exibe empréstimo
+CT28: Aprovado — Filtro devolvidos antes de devolver
+CT29: Aprovado — Excluir livro emprestado
+CT30: Aprovado — REGRESSÃO BUG02: editar livro emprestado
+CT31: Aprovado — Filtro empréstimos ativos
+CT32: Aprovado — Devolver livro pelo histórico
+CT33: Aprovado — Filtro devolvidos após devolução
+CT34: Aprovado — Disponibilidade após devolução
+CT35: Aprovado — Integração de armazenamento / remontagem
+CT36: Aprovado — Escape de título HTML malicioso
+CT37: Aprovado — Ausência de erro JavaScript no fluxo
+CT38: Aprovado — Interface no celular
+CT39: Aprovado — Fallback com LocalStorage bloqueado
+CT41: Aprovado — Limite automático de 3 meses no calendário
+CT42: Aprovado — Prazo 3 meses + 1 dia
+CT43: Aprovado — Prazo exatamente de 3 meses
+CT44: Aprovado — Prazo menor que 3 meses (7 dias)
+CT45: Aprovado — Fim de mês: 30/11/2026 + 3 meses
+CT46: Aprovado — Mês com 31 dias seguido de mês com 30 dias
+BUG01-ANTES: Aprovado — Reproduzir defeito de retirada futura na versão anterior
+BUG02-ANTES: Aprovado — Reproduzir defeito de título desatualizado no histórico ativo
+Total: 47 / Aprovados: 47 / Reprovados: 0
